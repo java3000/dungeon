@@ -8,9 +8,15 @@ import ru.geekbrains.dungeon.GameController;
 import ru.geekbrains.dungeon.GameMap;
 
 public class Hero extends Unit {
+
+    final static int MOVEMENT_MAX = 5;
     float movementTime;
     float movementMaxTime;
     int targetX, targetY;
+    //2
+    int experience;
+    //3
+    int currentMovement;
 
     public Hero(TextureAtlas atlas, GameController gc) {
         super(gc, 1, 1, 10);
@@ -19,6 +25,10 @@ public class Hero extends Unit {
         this.movementMaxTime = 0.2f;
         this.targetX = cellX;
         this.targetY = cellY;
+        //2
+        this.experience = 0;
+        //3
+        this.currentMovement = MOVEMENT_MAX;
     }
 
     public void update(float dt) {
@@ -42,6 +52,9 @@ public class Hero extends Unit {
             targetX = cellX;
             targetY = cellY;
             m.takeDamage(1);
+            //2
+            experience +=1;
+            System.out.println("hero exp = " + experience);
         }
 
         if (!gc.getGameMap().isCellPassable(targetX, targetY)) {
@@ -66,6 +79,8 @@ public class Hero extends Unit {
         if (!isStayStill()) {
             px = cellX * GameMap.CELL_SIZE + (targetX - cellX) * (movementTime / movementMaxTime) * GameMap.CELL_SIZE;
             py = cellY * GameMap.CELL_SIZE + (targetY - cellY) * (movementTime / movementMaxTime) * GameMap.CELL_SIZE;
+            //3
+            currentMovement = (currentMovement >= 0) ? currentMovement-- : MOVEMENT_MAX;
         }
         batch.draw(texture, px, py);
         batch.setColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -75,5 +90,13 @@ public class Hero extends Unit {
         batch.setColor(0.0f, 1.0f, 0.0f, 1.0f);
         batch.draw(textureHp, px + 2, py + 52, (float) hp / hpMax * 56, 8);
         batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 }
