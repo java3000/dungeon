@@ -82,8 +82,8 @@ public class Monster extends Unit {
             for (int i = cellX - 1; i <= cellX + 1; i++) {
                 for (int j = cellY - 1; j <= cellY + 1; j++) {
                     if (Math.abs(cellX - i) + Math.abs(cellY - j) == 1 && gc.getGameMap().isCellPassable(i, j) && gc.getUnitController().isCellFree(i, j)) {
-                        bestX = MathUtils.random(cellX, cellX);
-                        bestY = MathUtils.random(cellY, cellY);
+                        bestX = i;
+                        bestY = j;
                     }
                 }
             }
