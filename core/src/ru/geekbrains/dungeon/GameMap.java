@@ -8,6 +8,11 @@ public class GameMap {
     public static final int CELLS_X = 20;
     public static final int CELLS_Y = 20;
     public static final int CELL_SIZE = 60;
+    private byte[][] data;
+    private TextureRegion grassTexture;
+
+    private final int TERRAIN_GRASS = 0;
+    private final int TERRAIN_WALL = 1;
 
     public int getCellsX() {
         return CELLS_X;
@@ -16,12 +21,10 @@ public class GameMap {
     public int getCellsY() {
         return CELLS_Y;
     }
-
-    private byte[][] data;
-    private TextureRegion grassTexture;
-
-    private final int TERRAIN_GRASS = 0;
-    private final int TERRAIN_WALL = 1;
+    //2
+    public int getCellSize() {
+        return CELL_SIZE;
+    }
 
     public GameMap(TextureAtlas atlas) {
         this.data = new byte[CELLS_X][CELLS_Y];
