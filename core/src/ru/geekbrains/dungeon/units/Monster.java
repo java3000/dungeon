@@ -84,6 +84,7 @@ public class Monster extends Unit {
                     if (Math.abs(cellX - i) + Math.abs(cellY - j) == 1 && gc.getGameMap().isCellPassable(i, j) && gc.getUnitController().isCellFree(i, j)) {
                         bestX = i;
                         bestY = j;
+                        break;
                     }
                 }
             }
