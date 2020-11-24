@@ -2,6 +2,7 @@ package ru.geekbrains.dungeon.game;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ public class UnitController {
     private Unit currentUnit;
     private int index;
     private List<Unit> allUnits;
+    //6
+    private final int MONSTER_TRIGGER = 3;
 
     public MonsterController getMonsterController() {
         return monsterController;
@@ -56,8 +59,17 @@ public class UnitController {
         if (index >= allUnits.size()) {
             index = 0;
         }
+        //6
+        //самый идиотский момент!
+        //каждый третий, но где этот метод вызывается!!!
+        //а в update нельхя, ибо либо будет чудовище условий, либо FPS+ монстров за цикл.
+        //Переопределить? это дублирование. Тотальное.
+        if(gc.getUnitController().getHero().getRound() % 3 == 0)
+            this.monsterController.activate(MathUtils.random(gc.getGameMap().getCellsX()), MathUtils.random((gc.getGameMap().getCellsY())));
+
         currentUnit = allUnits.get(index);
         currentUnit.startTurn();
+
     }
 
     public void render(SpriteBatch batch, BitmapFont font18) {

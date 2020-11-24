@@ -14,6 +14,10 @@ public class Monster extends Unit {
         this.texture = Assets.getInstance().getAtlas().findRegion("monster");
         this.textureHp = Assets.getInstance().getAtlas().findRegion("hp");
         this.hp = -1;
+        //3
+        //монстр сам по себе, пофиг, что юнит.
+        //Такова линия партии, понимаешь ли...
+        hpAlpha = 1.0f;
     }
 
     public void activate(int cellX, int cellY) {
