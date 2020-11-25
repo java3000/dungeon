@@ -60,10 +60,6 @@ public class UnitController {
             index = 0;
         }
         //6
-        //самый идиотский момент!
-        //каждый третий, но где этот метод вызывается!!!
-        //а в update нельхя, ибо либо будет чудовище условий, либо FPS+ монстров за цикл.
-        //Переопределить? это дублирование. Тотальное.
         if(gc.getUnitController().getHero().getRound() % 3 == 0)
             this.monsterController.activate(MathUtils.random(gc.getGameMap().getCellsX()), MathUtils.random((gc.getGameMap().getCellsY())));
 
