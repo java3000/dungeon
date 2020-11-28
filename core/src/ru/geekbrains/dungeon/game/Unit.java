@@ -28,6 +28,8 @@ public abstract class Unit implements Poolable {
     int turns, maxTurns;
     float innerTimer;
     StringBuilder stringHelper;
+    //2
+    private int attacks;
 
     public Unit(GameController gc, int cellX, int cellY, int hpMax) {
         this.gc = gc;
@@ -45,6 +47,9 @@ public abstract class Unit implements Poolable {
         this.innerTimer = MathUtils.random(1000.0f);
         this.stringHelper = new StringBuilder();
         this.gold = MathUtils.random(1, 5);
+        //2
+        this.turns = MathUtils.random(1,4);
+        this.attacks = MathUtils.random(1,4);
     }
 
     public void addGold(int amount) {
@@ -58,8 +63,10 @@ public abstract class Unit implements Poolable {
         }
     }
 
+    //2
     public void startTurn() {
-        turns = maxTurns;
+        turns = MathUtils.random(1,4);
+        attacks = MathUtils.random(1,4);
     }
 
     public void startRound() {
@@ -106,7 +113,8 @@ public abstract class Unit implements Poolable {
     public void attack(Unit target) {
         target.takeDamage(this, BattleCalc.attack(this, target));
         this.takeDamage(target, BattleCalc.checkCounterAttack(this, target));
-        turns--;
+        //3
+        attacks--;
     }
 
     public void update(float dt) {
@@ -149,6 +157,11 @@ public abstract class Unit implements Poolable {
         font18.draw(batch, stringHelper, barX, barY + 64, 60, 1, false);
 
         font18.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        stringHelper.setLength(0);
+        stringHelper.append("S: ").append(turns).append("A: ").append(attacks);
+        //font18.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        font18.draw(batch, stringHelper, barX, barY + 80, 60, 1, false);
         batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 

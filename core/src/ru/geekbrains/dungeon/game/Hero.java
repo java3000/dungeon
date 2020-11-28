@@ -30,6 +30,11 @@ public class Hero extends Unit {
                 goTo(gc.getCursorX(), gc.getCursorY());
             }
         }
+        //3
+        //по аналогии с Monster.think
+        if (amIBlocked()) {
+            turns = 0;
+        }
     }
 
     public void renderHUD(SpriteBatch batch, BitmapFont font, int x, int y) {
