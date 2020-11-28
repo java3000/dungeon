@@ -3,6 +3,7 @@ package ru.geekbrains.dungeon.units;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.dungeon.BattleCalc;
 import ru.geekbrains.dungeon.GameController;
@@ -23,6 +24,8 @@ public abstract class Unit {
     float movementMaxTime;
     int targetX, targetY;
     int turns, maxTurns;
+    //2
+    int attacks, maxAttacks;
 
     public int getDefence() {
         return defence;
@@ -56,7 +59,9 @@ public abstract class Unit {
     }
 
     public void startTurn() {
-        turns = maxTurns;
+        //2
+        turns = MathUtils.random(1,4);
+        attacks = MathUtils.random(1,4);
     }
 
     public boolean isActive() {
@@ -97,7 +102,8 @@ public abstract class Unit {
     public void attack(Unit target) {
         target.takeDamage(BattleCalc.attack(this, target));
         this.takeDamage(BattleCalc.checkCounterAttack(this, target));
-        turns--;
+        //2
+        attacks--;
     }
 
     public void update(float dt) {
