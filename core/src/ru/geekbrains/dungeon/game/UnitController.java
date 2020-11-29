@@ -63,6 +63,8 @@ public class UnitController {
             index = 0;
             gc.roundUp();
         }
+        if(gc.getUnitController().getHero().getRound() % 3 == 0)
+            this.monsterController.activate(MathUtils.random(gc.getGameMap().getCellsX()), MathUtils.random((gc.getGameMap().getCellsY())));
         currentUnit = allUnits.get(index);
         currentUnit.startTurn();
     }
