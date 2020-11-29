@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import lombok.Data;
-import ru.geekbrains.dungeon.game.BattleCalc;
-import ru.geekbrains.dungeon.game.GameController;
-import ru.geekbrains.dungeon.game.GameMap;
-import ru.geekbrains.dungeon.game.Weapon;
+import ru.geekbrains.dungeon.game.*;
 import ru.geekbrains.dungeon.helpers.Assets;
 import ru.geekbrains.dungeon.helpers.Poolable;
 
@@ -56,6 +53,8 @@ public abstract class Unit implements Poolable {
     float movementMaxTime;
     int targetX, targetY;
     Weapon weapon;
+    //5
+    Armour armour;
 
     float innerTimer;
     StringBuilder stringHelper;
@@ -152,10 +151,12 @@ public abstract class Unit implements Poolable {
                 movementTime = 0;
                 cellX = targetX;
                 cellY = targetY;
-                stats.movePoints--;
+                //2
+                stats.movePoints -= gc.getGameMap().getCellTurnCost(targetX, targetY);
                 gc.getGameMap().checkAndTakeDrop(this);
             }
         }
+
     }
 
     public void render(SpriteBatch batch, BitmapFont font18) {
@@ -192,6 +193,15 @@ public abstract class Unit implements Poolable {
             font18.draw(batch, stringHelper, barX, barY + 80, 60, 1, false);
         }
         batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        //4
+        if(gc.getCursorX() == cellX && gc.getCursorY() == cellY){
+            stringHelper.setLength(0);
+            // format - static метод
+            stringHelper.append(String.format("HP: %d%nDEF: %d%nAP: %d%nMP: %d%nVR: %d%n",
+                    stats.hp, stats.defence, stats.attackPoints, stats.movePoints, stats.visionRadius));
+            font18.draw(batch, stringHelper, barX + 100, barY + 100, 60, 1, false);
+        }
     }
 
 

@@ -5,9 +5,13 @@ import ru.geekbrains.dungeon.game.units.Unit;
 
 public class BattleCalc {
     public static int attack(Unit attacker, Unit target) {
+        //5
         int out = attacker.getWeapon().getDamage();
+
         out -= target.getStats().getDefence();
-        if (out < 0) {
+        out -= target.getArmour().getDefense();
+
+        if (out < 0 || target.getArmour().isReflects(attacker.getWeapon().getType())) {
             out = 0;
         }
         return out;
