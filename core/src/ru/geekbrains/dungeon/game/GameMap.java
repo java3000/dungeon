@@ -23,14 +23,10 @@ public class GameMap {
 
         int index;
 
-        //2
-        int turnCost;
-
         public Cell() {
             type = CellType.GRASS;
             dropType = DropType.NONE;
             index = 0;
-
         }
 
         public void changeType(CellType to) {
@@ -64,9 +60,6 @@ public class GameMap {
         for (int i = 0; i < CELLS_X; i++) {
             for (int j = 0; j < CELLS_Y; j++) {
                 this.data[i][j] = new Cell();
-                //3
-                //сколько-то
-                this.data[i][j].turnCost = (MathUtils.random(i+j+1) % 10 == 0) ? 2 : 1;
             }
         }
         int treesCount = (int) ((CELLS_X * CELLS_Y * FOREST_PERCENTAGE) / 100.0f);
@@ -90,18 +83,17 @@ public class GameMap {
         return true;
     }
 
-    public void render(SpriteBatch batch) {
+    public void renderGround(SpriteBatch batch) {
         for (int i = 0; i < CELLS_X; i++) {
             for (int j = CELLS_Y - 1; j >= 0; j--) {
-                //3
-                if (data[i][j].turnCost == 2) {
-                    batch.setColor(.7f, .7f, .7f, 1.0f);
-                    batch.draw(grassTexture, i * CELL_SIZE, j * CELL_SIZE);
-                    batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-                } else {
-                    batch.draw(grassTexture, i * CELL_SIZE, j * CELL_SIZE);
-                }
+                batch.draw(grassTexture, i * CELL_SIZE, j * CELL_SIZE);
+            }
+        }
+    }
 
+    public void renderObjects(SpriteBatch batch) {
+        for (int i = 0; i < CELLS_X; i++) {
+            for (int j = CELLS_Y - 1; j >= 0; j--) {
                 if (data[i][j].type == CellType.TREE) {
                     batch.draw(treesTextures[data[i][j].index], i * CELL_SIZE, j * CELL_SIZE);
                 }
@@ -139,9 +131,5 @@ public class GameMap {
         }
         currentCell.dropType = DropType.NONE;
         currentCell.dropPower = 0;
-    }
-
-    public int getCellTurnCost(int targetX, int targetY) {
-        return data[targetX][targetY].turnCost;
     }
 }
