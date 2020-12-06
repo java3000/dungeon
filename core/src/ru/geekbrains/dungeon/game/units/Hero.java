@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import lombok.Getter;
+import ru.geekbrains.dungeon.game.Berry;
+import ru.geekbrains.dungeon.game.GameMap;
 import ru.geekbrains.dungeon.game.Weapon;
 import ru.geekbrains.dungeon.helpers.Assets;
 import ru.geekbrains.dungeon.game.GameController;
@@ -22,6 +24,7 @@ public class Hero extends Unit {
     private Label hpLabel;
     private Label goldLabel;
 
+
     public Hero(GameController gc) {
         super(gc, 1, 1, 10, "Hero");
         this.name = "Sir Lancelot";
@@ -32,6 +35,12 @@ public class Hero extends Unit {
 
     public void update(float dt) {
         super.update(dt);
+
+        if(stats.hp <= 0){
+            ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.GAMEOVER);
+            return;
+        }
+
         if (Gdx.input.justTouched() && canIMakeAction()) {
             Monster m = gc.getUnitController().getMonsterController().getMonsterInCell(gc.getCursorX(), gc.getCursorY());
             if (m != null && canIAttackThisTarget(m, 1)) {
@@ -39,7 +48,19 @@ public class Hero extends Unit {
             } else {
                 goTo(gc.getCursorX(), gc.getCursorY());
             }
+
+            stats.consumeSatiety();
+
+            if(gc.getGameMap().getCellType(gc.getCursorX(), gc.getCursorY()) == GameMap.CellType.TREE){
+                for(Berry b : gc.getGameMap().getBc().getActiveList()){
+                    if(b.getCellX() == gc.getCursorX() && b.getCellY() == gc.getCursorY()){
+                        b.deactivate();
+                        stats.restoreSatiety();
+                    }
+                }
+            }
         }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             tryToEndTurn();
         }

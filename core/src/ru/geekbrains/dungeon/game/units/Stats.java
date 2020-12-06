@@ -10,6 +10,7 @@ public class Stats {
     int attackPoints, minAttackPoints, maxAttackPoints;
     int movePoints, minMovePoints, maxMovePoints;
     int visionRadius;
+    int satiety;
 
     public Stats(int level, int maxHp, int minAttackPoints, int maxAttackPoint, int minMovePoints, int maxMovePoint) {
         this.level = level;
@@ -20,6 +21,17 @@ public class Stats {
         this.minMovePoints = minMovePoints;
         this.maxMovePoints = maxMovePoint;
         this.visionRadius = 5;
+        this.satiety = 2;
+    }
+
+    public void consumeSatiety(){
+        if (satiety > 0) satiety--;
+        else hp--;
+    }
+
+    public void restoreSatiety(){
+        satiety++;
+        if (satiety >= 5) satiety = 5;
     }
 
     public void restorePoints() {
