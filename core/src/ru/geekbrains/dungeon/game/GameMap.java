@@ -50,12 +50,25 @@ public class GameMap {
         return CELLS_Y;
     }
 
+
     private Cell[][] data;
     private TextureRegion grassTexture;
     private TextureRegion goldTexture;
     private TextureRegion[] treesTextures;
 
-    public GameMap() {
+    public BerryController getBc() {
+        return bc;
+    }
+
+    GameController gc;
+
+    private BerryController bc;
+
+    public GameMap(GameController gc) {
+
+        bc = new BerryController();
+        this.gc = gc;
+
         this.data = new Cell[CELLS_X][CELLS_Y];
         for (int i = 0; i < CELLS_X; i++) {
             for (int j = 0; j < CELLS_Y; j++) {
@@ -68,9 +81,20 @@ public class GameMap {
 
         }
 
+        for (int i = 0; i < CELLS_X; i++) {
+            for (int j = CELLS_Y - 1; j >= 0; j--) {
+                if (data[i][j].type == CellType.TREE) if ((i + j) % 3 == 0) bc.activate(i, j);
+            }
+        }
+
         this.grassTexture = Assets.getInstance().getAtlas().findRegion("grass");
         this.goldTexture = Assets.getInstance().getAtlas().findRegion("chest").split(60, 60)[0][0];
         this.treesTextures = Assets.getInstance().getAtlas().findRegion("trees").split(60, 90)[0];
+
+    }
+
+    public CellType getCellType(int cx, int cy) {
+        return data[cx][cy].type;
     }
 
     public boolean isCellPassable(int cx, int cy) {

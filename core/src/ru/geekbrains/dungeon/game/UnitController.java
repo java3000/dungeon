@@ -19,6 +19,7 @@ public class UnitController {
     private Unit currentUnit;
     private int index;
     private List<Unit> allUnits;
+    private int roundsCount;
 
     public boolean isItMyTurn(Unit unit) {
         return currentUnit == unit;
@@ -39,6 +40,7 @@ public class UnitController {
         this.allUnits = new ArrayList<>();
         this.hero = new Hero(gc);
         this.monsterController = new MonsterController(gc);
+        this.roundsCount = 0;
     }
 
     public void init(int monsterCount) {
@@ -52,6 +54,7 @@ public class UnitController {
     }
 
     public void startRound() {
+        roundsCount++;
         for (int i = 0; i < getAllUnits().size(); i++) {
             getAllUnits().get(i).startRound();
         }

@@ -50,7 +50,7 @@ public class GameController {
         this.stage = new Stage(ScreenManager.getInstance().getViewport(), batch);
         this.mouse = new Vector2(0, 0);
         this.pressedMouse = new Vector2(0, 0);
-        this.gameMap = new GameMap();
+        this.gameMap = new GameMap(this);
         this.armourController = new ArmourController(this);
         this.effectController = new EffectController();
         this.unitController = new UnitController(this);

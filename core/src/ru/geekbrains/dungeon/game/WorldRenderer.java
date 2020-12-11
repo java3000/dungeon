@@ -42,6 +42,7 @@ public class WorldRenderer {
         batch.setColor(1, 1, 1, 1);
 
         gc.getGameMap().renderObjects(batch);
+        gc.getGameMap().getBc().render(batch);
         gc.getUnitController().render(batch, font18);
         gc.getProjectileController().render(batch);
         gc.getInfoController().render(batch, font18);

@@ -169,6 +169,7 @@ public abstract class Unit implements Poolable {
         }
         stats.attackPoints--;
 
+
         gc.getEffectController().setup(target.getCellCenterX(), target.getCellCenterY(), weapon.getFxIndex());
     }
 

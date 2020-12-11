@@ -1,27 +1,22 @@
 package ru.geekbrains.dungeon;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import ru.geekbrains.dungeon.game.GameController;
-import ru.geekbrains.dungeon.game.GameMap;
-import ru.geekbrains.dungeon.helpers.Assets;
 import ru.geekbrains.dungeon.screens.ScreenManager;
 
 public class DungeonGame extends Game {
     private SpriteBatch batch;
 
     // Домашнее задание:
-    // 1. Разобраться с кодом
-    // 2. На деревьях растут ягоды (не на всех), их можно собирать. Каждый 5 ход,
+    // +1. Разобраться с кодом
+    // +-2. На деревьях растут ягоды (не на всех), их можно собирать. Каждый 5 ход,
     // на случайном дереве растет ягода
-    // 3. При выполнении действий сытость персонажа падает, если сытости падать некуда,
+    // +3. При выполнении действий сытость персонажа падает, если сытости падать некуда,
     // то начинает падать здоровье
-    // 4. Если кликнуть на дерево, то персонаж съедает все ягоды с него и заполняет сытость
-    // 5. * Когда здоровье падает дод 0, нужно перекинуть игрока на экран Game Over
+    // +4. Если кликнуть на дерево, то персонаж съедает все ягоды с него и заполняет сытость
+    // +5. * Когда здоровье падает дод 0, нужно перекинуть игрока на экран Game Over
 
     // Идея механики:
     // 1. На ваш ход выбатает случайный набор действий (2 шага, 4 атаки, 1 спец действие)
